@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+.idea
+.vscode
+__pycache__
+.DS_Store
+.ipynb_checkpoints
