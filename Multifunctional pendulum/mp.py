@@ -173,6 +173,11 @@ def show_data(obj):
                 print(ee, ' : ', item[ee])
         print("**************************************")
 
+def C_d2(d2_lower, d2_upper):
+    L = np.array(d2_lower)
+    H = np.array(d2_upper)
+    d = np.round((L + H) / 2, 3).tolist()
+    return d
 
 class Wiggler:
     def __init__(self, _T5, _d2, _D, M, L):
