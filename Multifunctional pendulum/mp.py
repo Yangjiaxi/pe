@@ -1,5 +1,13 @@
 import numpy as np
 
+def input2list(str):
+    res = []
+    for ele in str.split('/'):
+        res.append([float(e) for e in ele.split('+')])
+    if len(res) == 1:
+        return res[0]
+    else:
+        return res
 
 def sn(num, d):
     output_format = '%.' + str(d) + 'e'
@@ -94,21 +102,24 @@ def C_T60(_T60_l, parameter):
 
 
 def C_g(l_data, d_data, L_data, T_data):
-    # g_0 = 9.79338  # m/s^2
+    g_0 = 9.79338  # m/s^2
     g = 4 * np.pi ** 2 * L_data['L'] * T_data['T_mean'] ** -2
     dl = 1 / (l_data['l_mean'] + d_data['d_mean'] / 2)
     dd = dl / 2
     dT = -2 / T_data['T_mean']
     dri_l = [dl*l_data['U_l'], dd*d_data['U_d'], dT*T_data['U_T']]
     Ur_g = np.linalg.norm(dri_l)
+    Ur_g_c = np.abs(g - g_0) / g_0
 
     U_g = g * Ur_g
     res = {
         'g': g,
         'Ur_g': Ur_g,
         'U_g': U_g,
+        'Ur_g_c' : Ur_g_c,
         'unit': 'm/s^2',
-        'flag': '<' if Ur_g < 0.01 else '>='
+        'flag': '<' if Ur_g < 0.01 else '>=',
+        'flag_c' : '<' if Ur_g_c < 0.01 else '>='
     }
     return res
 
@@ -136,9 +147,9 @@ def make(n, parameter, d_data, l_data, L_data, T_data, g_data):
           (sn(l_data['l_mean'], 2), sn(l_data['U_l'], 3)))
     print("*********************************************************************")
     print('三、有效摆长')
-    print('\t有效摆长L_bar = l_bar + d_bar / 2 = (%s + %s / 2) m = %s m'
+    print('\t有效摆长 L_bar = l_bar + d_bar / 2 = (%s + %s / 2) m = %s m'
           % (sn(l_data['l_mean'], 2), sn(d_data['d_mean'], 3), sn(L_data['L'], 2)))
-    print('\t由误差传递公式U_L = %s m' % sn(L_data['U_L'], 2))
+    print('\t由误差传递公式 U_L = %s m' % sn(L_data['U_L'], 2))
     print("*********************************************************************")
     print('四、周期')
     print('\t平均 T_60_bar = %s s' % sn(T_data['T60_mean'], 3))
@@ -155,9 +166,11 @@ def make(n, parameter, d_data, l_data, L_data, T_data, g_data):
     print('五、重力加速度')
     print('\t计算可得:g = 4 * π^[2] * %.2f * 10^[-2] * %.3f^[-2] = %.4f m/s^[2]'
           % (L_data['L'], T_data['T_mean'], g_data['g']))
-    print('\tUr_g = %.4f = %.2f%% %s 1%%' %
+    print('\tUr_g = %.4f = %.2f%% %s 1%%  (由不确定度传递公式得到)' %
           (g_data['Ur_g'], g_data['Ur_g'] * 100, g_data['flag']))
-    print('\t所设计的实验方案[%s]达到预期的要求' % ('能' if g_data['flag'] == '<' else '不能'))
+    print('\tUr_g_c = %.4f = %.2f%% %s 1%%  (由相对误差计算公式得到)' %
+          (g_data['Ur_g_c'], g_data['Ur_g_c'] * 100, g_data['flag_c']))
+    print('\t所设计的实验方案[%s]达到预期的要求 (基于不确定度传递公式)' % ('能' if g_data['flag'] == '<' else '不能'))
     print('\tU_g = g * Ur_g = (%.4f * %.2f%%) m/s^[2] = %.2f m/s^[2]'
           % (g_data['g'], 100 * g_data['Ur_g'], g_data['U_g']))
     print(
