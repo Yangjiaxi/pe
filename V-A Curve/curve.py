@@ -16,8 +16,9 @@ def rd(mr, mn, K, _data):
     data = np.array(_data)
     r = mr * K / 100
     if r < 1:
-        for i in range(1, 10):
-            if round(r, i) > 0:
+        s = str(r)
+        for i in range(len(s)):
+            if float(s[0:2+i]) > 0:
                 r_d = i
                 break
     else:
@@ -95,7 +96,7 @@ def exp3(_U40, _I40, _U60, _I60, _U80, _I80):
     mks = ['o', 's', '^']
     lbs = ["$40μA$", "$60μA$", "$80μA$"]
     for (a, b, s, n) in zip(Ul, Il, mks, lbs):
-        # plt.plot(a, b, color='black', markevery=100)
+        # plt.plot(a, b, color='black')
         plt.scatter(a, b, color='black', s=30, marker=s, label=n)
     plt.legend(lbs, frameon=True, fancybox=True, shadow=True)
     Umax = int(np.max([U40.max(), U60.max(), U80.max()])) + 1
