@@ -79,11 +79,11 @@ def exp2(V1, V2, V3, V4, kB):
     A = np.vstack([I_M_2, np.ones(len(I_M_2))]).T
     m, c = np.linalg.lstsq(A, np.array(V_H), rcond=1)[0]
     plt.plot(I_M_2, m * I_M_2 + c, c='black')
-    plt.title("$V_H - I_s$关系图")
-    plt.xlabel("$I_S/mV$")
+    plt.title("$V_H - I_M$关系图")
+    plt.xlabel("$I_M/mV$")
     _ = plt.ylabel("$V_H/mA$")
     lbs = [
-        '$V_H = {} * I_S {}{}$'.format(round(m, 2), '+' if c > 0 else '', round(c, 3))]
+        '$V_H = {} * I_M {}{}$'.format(round(m, 2), '+' if c > 0 else '', round(c, 3))]
     plt.legend(lbs, frameon=True, fancybox=True, shadow=True)
     k = m
     R_H = k * d * 0.1 / (I_S_2 * kB) * 10**8
