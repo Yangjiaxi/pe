@@ -8,7 +8,6 @@ b = 4.00  # mm
 U_b = 0.02  # mm
 AC = 3.00  # mm
 U_AC = 0.02  # mm
-kB = 1.80 * 1000
 I_M_1 = 0.450
 U_I_M_1 = 0.001
 I_S_1 = np.linspace(1.00, 4.50, 8)
@@ -40,7 +39,7 @@ def sn(num, d):
     return res
 
 
-def exp1(V1, V2, V3, V4):
+def exp1(V1, V2, V3, V4, kB):
     V_H = (V1 - V2 + V3 - V4) / 4
     plt.scatter(I_S_1, V_H, c='black')
     A = np.vstack([I_S_1, np.ones(len(I_S_1))]).T
@@ -59,7 +58,7 @@ def exp1(V1, V2, V3, V4):
     n = 1 / (R_H * e)  # cm^[-3]
     U_n = U_R_H / R_H * n
     # -------------------------------------------------------
-    print("V_H = {}".format(V_H))
+    print("V_H = {}".format(np.round(V_H, 2)))
     print('k = {} '.format(round(k, 4)))
     print("*"*50)
     print('R_H = {} (cm^[3]/C)'.format(sn(R_H, 2)))
@@ -74,7 +73,7 @@ def exp1(V1, V2, V3, V4):
                                                          10**14, 2), round(U_n / 10**14, 2)))
 
 
-def exp2(V1, V2, V3, V4):
+def exp2(V1, V2, V3, V4, kB):
     V_H = (V1 - V2 + V3 - V4) / 4
     plt.scatter(I_M_2, V_H, c='black')
     A = np.vstack([I_M_2, np.ones(len(I_M_2))]).T
@@ -93,7 +92,7 @@ def exp2(V1, V2, V3, V4):
     n = 1 / (R_H * e)  # cm^[-3]
     U_n = U_R_H / R_H * n
     # -------------------------------------------------------
-    print("V_H = {}".format(V_H))
+    print("V_H = {}".format(np.round(V_H, 2)))
     print('k = {} '.format(round(k, 2)))
     print("*"*50)
     print('R_H = {} (cm^[3]/C)'.format(sn(R_H, 2)))
