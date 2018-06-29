@@ -46,8 +46,8 @@ def exp1(V1, V2, V3, V4, kB):
     m, c = np.linalg.lstsq(A, np.array(V_H), rcond=1)[0]
     plt.plot(I_S_1, m * I_S_1 + c, c='black')
     plt.title("$V_H - I_s$关系图")
-    plt.xlabel("$I_S/mV$")
-    _ = plt.ylabel("$V_H/mA$")
+    plt.xlabel("$I_S/mA$")
+    _ = plt.ylabel("$V_H/mV$")
     lbs = [
         '$V_H = {} * I_S {}{}$'.format(round(m, 4), '+' if c > 0 else '', round(c, 3))]
     plt.legend(lbs, frameon=True, fancybox=True, shadow=True)
@@ -80,8 +80,8 @@ def exp2(V1, V2, V3, V4, kB):
     m, c = np.linalg.lstsq(A, np.array(V_H), rcond=1)[0]
     plt.plot(I_M_2, m * I_M_2 + c, c='black')
     plt.title("$V_H - I_M$关系图")
-    plt.xlabel("$I_M/mV$")
-    _ = plt.ylabel("$V_H/mA$")
+    plt.xlabel("$I_M/mA$")
+    _ = plt.ylabel("$V_H/mV$")
     lbs = [
         '$V_H = {} * I_M {}{}$'.format(round(m, 2), '+' if c > 0 else '', round(c, 3))]
     plt.legend(lbs, frameon=True, fancybox=True, shadow=True)
@@ -114,8 +114,8 @@ def exp3(I_S, V_AC, R_H, U_R_H):
     m, c = np.linalg.lstsq(A, np.array(V_AC), rcond=1)[0]
     plt.plot(I_S, m * I_S + c, c='black')
     plt.title("$V_{AC} - I_S$关系图")
-    plt.xlabel("$I_S/mV$")
-    _ = plt.ylabel("$V_{AC}/mA$")
+    plt.xlabel("$I_S/mA$")
+    _ = plt.ylabel("$V_{AC}/mV$")
     lbs = [
         '$V_'+'{AC}'+'= {} * I_S {}{}$'.format(round(m, 2), '+' if c > 0 else '', round(c, 3))]
     plt.legend(lbs, frameon=True, fancybox=True, shadow=True)
